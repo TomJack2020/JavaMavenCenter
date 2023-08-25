@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- TargetMapper.xml -->
+<mapper namespace="com.example.ProductTargetListMapper">
+<!--    <insert id="insertIntoTarget" parameterType="com.itheima.pojo.Product">-->
+    <insert id="saveProduct" parameterType="java.util.List">
+        INSERT INTO product_spu_sku (sku, spu,title_cn, product_category_id, end_time) VALUES
+        <foreach collection="list" item="item" separator="," >
+            (#{item.sku},
+            #{item.spu},
+            #{item.title_cn},
+            #{item.product_category_id},
+            <if test="item.end_time != null or item.end_time != ''" >
+                #{item.end_time,jdbcType=TIMESTAMP}
+            </if>
+            )
+        </foreach>
+    </insert>
+
+    <!--存储图片信息-->
+    <insert id="savePicture" parameterType="java.util.List">
+        INSERT INTO product_image (sku, image, image_index) VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.sku},
+            #{item.image},
+            #{item.image_index}
+            )
+        </foreach>
+    </insert>
+</mapper>
+
+
+
+

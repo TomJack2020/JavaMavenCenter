@@ -65,7 +65,6 @@
             <version>0.1.52</version>
         </dependency>
 
-
         <!-- Slf4j API -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -79,11 +78,19 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.6</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.3</version>
+            <scope>com.Draft.test</scope>
         </dependency>
 
 

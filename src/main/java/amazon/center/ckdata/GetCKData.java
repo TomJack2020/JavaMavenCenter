@@ -1,25 +1,17 @@
 package amazon.center.ckdata;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.sql.*;
+import java.util.*;
+
+
 
 public class GetCKData {
 
     public static void main(String[] args) {
-        ArrayList<ArrayList<Object>> res = GetCon();
+        ArrayList<ArrayList<Object>> res = Dbutils.GetCon();
         // 配置数据库信息链接
         assert res != null;
         ArrayList<Object> con16 = res.get(1); // CK数据库连
@@ -30,46 +22,6 @@ public class GetCKData {
         // 1、根据产品线查询对应的得产品信息数据
     }
 
-    /**
-     * 获取数据库连接信息数据
-     * @return
-     */
-    public static ArrayList<ArrayList<Object>> GetCon()   {
-        Properties props = new Properties();
-        try{
-            FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
-            props.load(fis);
-            fis.close();
-
-            //Amazon销售中台连接信息
-            ArrayList<Object> res1 = new ArrayList<Object>(){{
-                add(props.getProperty("UserName"));
-                add(props.getProperty("PassWord"));
-                add(props.getProperty("url16"));
-            }};
-
-            // Ck数据库连接信息
-            ArrayList<Object> res2 = new ArrayList<Object>(){{
-                add(props.getProperty("UserNameCk"));
-                add(props.getProperty("PassWordCk"));
-                add(props.getProperty("urlCk"));
-            }};
-
-
-
-            ArrayList<ArrayList<Object>> res_li = new ArrayList<>();
-            res_li.add(res1);
-            res_li.add(res2);
-            return res_li;
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-
 
 
     public static void CkProductLine(String jdbcUrl, String username, String password) {
@@ -78,7 +30,7 @@ public class GetCKData {
         // 查询存储
         try {
             // Register the ClickHouse JDBC driver
-            Class.forName("ru.yandex.clickhouse.ClickHouseDriver");
+            //Class.forName("ru.yandex.clickhouse.ClickHouseDriver");
 
             // Establish the connection
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
