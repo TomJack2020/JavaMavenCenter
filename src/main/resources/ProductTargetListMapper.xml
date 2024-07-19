@@ -30,6 +30,89 @@
             )
         </foreach>
     </insert>
+
+
+    <!--存储sku违禁信息 -->
+    <insert id="saveForbidden" parameterType="java.util.List">
+        INSERT INTO imdb.syn_yibai_prod_forbidden_grade (
+        id,
+        sku,
+        platform_code,
+        risk_grade,
+        risk_grade_type,
+        create_time,
+        create_user,
+        update_user,
+        update_time,
+        is_del,
+        reason,
+        forbidden_source,
+        forbidden_data_type
+
+        ) VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id},
+            #{item.sku},
+            #{item.platform_code},
+            #{item.risk_grade},
+            #{item.risk_grade_type},
+            #{item.create_time},
+            #{item.create_user},
+            #{item.update_user},
+            #{item.update_time},
+            #{item.is_del},
+            #{item.reason},
+            #{item.forbidden_source},
+            #{item.forbidden_data_type}
+            )
+        </foreach>
+    </insert>
+
+
+    <!--存储sku侵权信息 -->
+    <insert id="saveInfCountry" parameterType="java.util.List">
+        INSERT INTO imdb.syn_yibai_prod_inf_country_grade(
+        id,
+        sku,
+        country_code,
+        risk_grade,
+        risk_grade_type,
+        create_time,
+        create_user,
+        update_user,
+        update_time,
+        is_del,
+        infringement_type,
+        infringement,
+        infringement_source,
+        infringement_info
+        ) VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+            #{item.id},
+            #{item.sku},
+            #{item.country_code},
+            #{item.risk_grade},
+            #{item.risk_grade_type},
+            #{item.create_time},
+            #{item.create_user},
+            #{item.update_user},
+            #{item.update_time},
+            #{item.is_del},
+            #{item.infringement_type},
+            #{item.infringement},
+            #{item.infringement_source},
+            #{item.infringement_info}
+            )
+        </foreach>
+    </insert>
+
+
+
+
+
+
 </mapper>
 
 

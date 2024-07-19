@@ -13,7 +13,7 @@
         end as end_time
         from yibai_prod_base.yibai_prod_sku a
         left join yibai_prod_base.yibai_prod_spu b on a.spu = b.spu
-        limit 100000;
+        limit 10000;
     </select>
 
     <!--产品系统实现图片同步数据库-->
@@ -26,4 +26,26 @@
         </where>
         limit #{limitNum};
     </select>
+
+
+    <!--产品系统实现 违禁数据同步到数据库-->
+    <select id="selectForbidden"  resultType="com.itheima.pojo.ProductForbidden">
+        select * from yibai_prod_base.yibai_prod_forbidden_grade
+        LIMIT #{offset}, 50000;
+    </select>
+
+
+    <!--产品系统实现 侵权数据同步到数据库-->
+    <select id="selectInfoCountry"  resultType="com.itheima.pojo.ProductInfoCountry">
+        select *
+        from yibai_prod_base.yibai_prod_inf_country_grade
+        LIMIT #{offset}, 50000;
+    </select>
+
+
+
+
+
+
+
 </mapper>

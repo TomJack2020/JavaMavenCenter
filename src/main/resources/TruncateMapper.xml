@@ -12,5 +12,13 @@
         TRUNCATE TABLE product_image
     </update>
 
+    <update id="truncate_syn_yibai_prod_forbidden_grade">
+        TRUNCATE TABLE imdb.syn_yibai_prod_forbidden_grade
+    </update>
+
+    <update id="truncate_syn_yibai_prod_inf_country_grade">
+        TRUNCATE TABLE imdb.syn_yibai_prod_inf_country_grade
+    </update>
+
 
 </mapper>

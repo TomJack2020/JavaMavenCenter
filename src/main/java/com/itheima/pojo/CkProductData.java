@@ -43,6 +43,42 @@ public class CkProductData {
         this.line1 = line1;
     }
 
+    private String sku;
+    private String dev_type_p;
+    private String product_sx;
+    private String product_status;
+
+    public String getLine2() {
+        return line2;
+    }
+
+    public void setLine2(String line2) {
+        this.line2 = line2;
+    }
+
+    public String getLine4() {
+        return line4;
+    }
+
+    public void setLine4(String line4) {
+        this.line4 = line4;
+    }
+
+    public String getLine3() {
+        return line3;
+    }
+
+    public void setLine3(String line3) {
+        this.line3 = line3;
+    }
+
+    private String line1;
+    private String line2;
+    private String line3;
+    private String line4;
+
+
+
     @Override
     public String toString() {
         return "CkProductData{" +
@@ -51,14 +87,13 @@ public class CkProductData {
                 ", product_sx='" + product_sx + '\'' +
                 ", product_status='" + product_status + '\'' +
                 ", line1='" + line1 + '\'' +
+                ", line2='" + line2 + '\'' +
+                ", line3='" + line3 + '\'' +
+                ", line4='" + line4 + '\'' +
                 '}';
     }
 
-    private String sku;
-    private String dev_type_p;
-    private String product_sx;
-    private String product_status;
-    private String line1;
+
 
 
 

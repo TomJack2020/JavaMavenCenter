@@ -82,10 +82,11 @@
         </where>
     </select>
 
-
     <!--获取CK产品详细信息 未使用map-->
     <select id="selectCkProductInfo"  resultType="com.itheima.pojo.CkProductData" >
-        SELECT a.sku,a.dev_type_p, product_sx,product_status, a.line1 FROM (
+        SELECT a.sku,a.dev_type_p, product_sx,product_status, a.line1 ,
+        a.line2, a.line3, a.line4
+        FROM (
         SELECT a.spu as spu ,
         b.sku as sku ,
         b.new_price,
@@ -161,7 +162,7 @@
     </select>
 
     <!--特定字段传入执行随机查询-->
-    <select id="selectCkProductRandom" resultType="com.itheima.pojo.CkProductData">
+    <select id="selectCkProductRandom" parameterType="hashmap" resultType="com.itheima.pojo.CkProductData">
         SELECT a.sku,a.dev_type_p, product_sx,product_status, a.line1 FROM (
         SELECT a.spu as spu ,
         b.sku as sku ,
@@ -230,7 +231,10 @@
         LEFT JOIN yb_datacenter.yb_product_linelist d
         ON toInt64(d.id) = c.product_linelist_id ) a
         <where>
-            ${column} = #{skuValue}
+            AND (${column} IN
+            <foreach item="columnItem" collection="columnValueList" open="(" separator="," close=")">
+                #{columnItem}
+            </foreach>)
         </where>
 
     </select>

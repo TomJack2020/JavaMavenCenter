@@ -31,7 +31,7 @@ public class ProductSyn {
 
 
         //目标数据源配置mybatis ---本地系统数据库
-        String TargetMapper = "mybatis_target_config.xml";
+        String TargetMapper = "mybatis_target_mysql_config.xml";
         InputStream inputStreamTarget;
         inputStreamTarget = Resources.getResourceAsStream(TargetMapper);
         SqlSessionFactory targetSqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStreamTarget);

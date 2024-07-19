@@ -1,8 +1,10 @@
 package com.itheima.pojo;
 
 import com.sun.jmx.snmp.Timestamp;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 public class Product {
 
@@ -67,5 +69,13 @@ public class Product {
     }
 
     private int product_category_id;
+
+
+    public interface ProductMapper {
+        List<Product> selectAll(@Param("start") Integer offset, @Param("size") Integer size);
+
+    }
+
+
 
 }

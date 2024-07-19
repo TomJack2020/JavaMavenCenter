@@ -14,9 +14,9 @@ import java.io.IOException;
 public class ReadExcel {
 
 
-    public String path = "C:\\Users\\Administrator\\Desktop\\amazon_account_dep.xlsx";
+    public String path = "C:\\Users\\Administrator\\Desktop\\amazon_account_dep_new.xlsx";
     @Test
-    public void Readexcel() throws IOException {
+    public void tsReadexcel() throws IOException {
         FileInputStream excelFile = new FileInputStream(new File(path));
         Workbook workbook = new XSSFWorkbook(excelFile);
         Sheet sheet = workbook.getSheetAt(0); // Assuming you're working with the first sheet

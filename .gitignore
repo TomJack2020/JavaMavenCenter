@@ -1,2 +1,8 @@
 # Project exclude paths
-/target/
+target/
+
+src/main/resources/
+logs/
+*.xlsx
+*.xls
+.idea/

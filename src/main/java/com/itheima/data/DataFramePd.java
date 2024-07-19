@@ -15,21 +15,21 @@ import java.util.Set;
 class DataFramePd {
     public static void main(String[] args) throws IOException {
         System.out.println("测试读取");
-        String path = "C:\\Users\\Administrator\\Desktop\\Amazon文案借取导出--十一.csv";
+        String path = "C:\\Users\\Administrator\\Desktop\\SMA-sku-RES.xlsx";
         FileInputStream excelFile = new FileInputStream(new File(path));
         Workbook workbook = new XSSFWorkbook(excelFile);
         Sheet sheet = workbook.getSheetAt(0); // Assuming you're working with the first sheet
 
         int sheetRowNumber = sheet.getLastRowNum();
         // 按照行读取数据
-        for (int rowNum = 1; rowNum <= 10; rowNum++) {
+        for (int rowNum = 0; rowNum <= 10; rowNum++) {
             Row row = sheet.getRow(rowNum);//Row表示每一行的数据
 
-            int minColIx = row.getFirstCellNum();
             int maxColIx = row.getLastCellNum();
+
+
             StringBuffer r = new StringBuffer();
             for (int i=0; i < maxColIx; i++){
-
                 r.append(row.getCell(i)).append("\t");
 
             }

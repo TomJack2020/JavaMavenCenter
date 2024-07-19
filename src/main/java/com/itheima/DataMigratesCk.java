@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-public class DataMigrates {
+public class DataMigratesCk {
 
 
     /**
-     * 数据迁移 数据同步到mysql数据库 全量更新
-     * @param args 无参数
-     * @throws IOException 异常
+     *  同步数据到目标数据库  【库表 from 产品系统 yibai_prod_base.yibai_prod_forbidden_grade】
+     * @param args kong
+     * @throws IOException error
      */
     public static void main(String[] args) throws IOException {
         // 数据源配置mybatis
@@ -27,38 +27,44 @@ public class DataMigrates {
         SqlSessionFactory sourceSqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStreamSource);
         SqlSession sourceSession = sourceSqlSessionFactory.openSession();
 
+
+
         //目标数据源配置mybatis
-        String TargetMapper = "mybatis_target_mysql_config.xml";
+        String TargetMapper = "mybatis_target_localCk_config.xml";
         InputStream inputStreamTarget;
         inputStreamTarget = Resources.getResourceAsStream(TargetMapper);
         SqlSessionFactory targetSqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStreamTarget);
         SqlSession targetSession = targetSqlSessionFactory.openSession();
 
         // 写入数据前初始化数据表 truncate table 保留数据结构
-        targetSession.update("TruncateMapper.truncateProduct");
+        targetSession.update("TruncateMapper.truncateForbidden");
         targetSession.commit(); // 提交事务
         System.out.println("Table truncated successfully.");
         long t0 = System.currentTimeMillis();
 
-        List<Product> dataList = sourceSession.selectList("com.example.ProductSourceMapper.selectProduct");
-        //数据分页存储--不然数据大了会爆内存
-        List<List<Product>> listPartition = Lists.partition(dataList, 100000);
-        int num = 0;
-        for (List<Product> item : listPartition) {
-            num += 1;
-            System.out.printf("数据写入 %s条成功\n", num * 100000);
-            // 批量插入
-            targetSession.insert("com.example.ProductTargetListMapper.saveProduct", item);
-            targetSession.commit(); // 提交事务
+
+        // 读取源数据
+        //分批次读取 每次推移5W条数据
+        for (int i = 0; i < 10; i++) {
+            int offset = i * 50000;
+            List<Product> dataList = sourceSession.selectList("com.example.ProductSourceMapper.selectForbidden", offset);
+            //System.out.printf("源数据条数 %s\n", dataList.size()); // 输出源数据条数  固定5W读取一次
+
+
+            //数据分页存储--不然数据大了会爆内存
+            List<List<Product>> listPartition = Lists.partition(dataList, 10000);
+            for (List<Product> item : listPartition) {
+                // 批量插入
+                targetSession.insert("com.example.ProductTargetListMapper.saveForbidden", item);
+                targetSession.commit(); // 提交事务
+            }
+            System.out.printf("数据写入 %s条成功\n", (i+1) * 50000);
+
+
         }
-//        System.out.println(dataList);
 
-        // 单插入
-//        for (Product record : dataList) {
-//            targetSession.insert("com.example.TargetMapper.insertIntoTarget", record); // 硬写
-//            targetSession.commit(); // 必须提交事务
-//        }
 
+        // 关闭资源
         sourceSession.close();
         targetSession.close();
 
@@ -68,6 +74,8 @@ public class DataMigrates {
         // 10000条       fli 24154ms     li
         // 100000条      fli 213738 ms   li   3414 ms
         // 1000000条     fli 213738 ms   li   26468 ms
+
+
     }
 
 
